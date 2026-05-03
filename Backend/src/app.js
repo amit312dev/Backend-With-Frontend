@@ -2,11 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const noteModel = require('./models/note.model');
 const cors = require('cors');
+const path = require('path');
 
 
 const app = express();
 
 app.use(express.json());
+app.use(express.static('./public'));
 app.use(cors());
 
 app.post("/notes", async (req, res)=>{
@@ -48,6 +50,10 @@ app.patch("/notes/:id", async (req, res)=>{
     res.status(200).json({message: "Note modified successfully", note: updatedNote});
 
 
+});
+
+app.use("*name",(req, res)=>{
+    res.sendFile(path.join(__dirname,"..","/public/index.html"));
 });
 
 
