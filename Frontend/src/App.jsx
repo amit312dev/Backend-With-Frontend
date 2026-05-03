@@ -5,7 +5,7 @@ function App() {
   const [notes, setNotes] = useState([]);
 
   function fetchNotes() {
-    axios.get("http://localhost:3000/notes")
+    axios.get("/notes")
     .then((response) => {
     console.log(response.data.notes);
     setNotes(response.data.notes);
@@ -22,7 +22,7 @@ function handleSubmit(e){
   const {title, description} = e.target.elements;
   console.log(title.value, description.value);
 
-  axios.post("http://localhost:3000/notes", {
+  axios.post("/notes", {
     title: title.value,
     description: description.value
   }).then((response)=>{
@@ -33,7 +33,7 @@ function handleSubmit(e){
 
 function handleDeleteNote(noteId){
 console.log(noteId);
-axios.delete(`http://localhost:3000/notes/${noteId}`)
+axios.delete(`/notes/${noteId}`)
 .then(res=>{
   console.log(res.data);
   fetchNotes();
