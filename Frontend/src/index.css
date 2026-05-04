@@ -1,39 +1,170 @@
-*{
-  margin:0%;
-  padding:0%;
-  box-sizing:border-box;
+/* 1. Global Reset & Fonts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body, #root{
-  width:100%;
-  height:100%;
-  font-family: 'Poppins', sans-serif;
+body {
+  background-color: #121212; /* Deeper dark background */
+  color: #e0e0e0;
+  font-family: 'Inter', 'Poppins', sans-serif;
 }
 
-html{
-  background-color: #212121;
-  font-family: 'Courier New', Courier, monospace;
+/* 2. Container for the whole app */
+#root {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.note {
-  background-color: #494949;
+/* 3. Modern Form Styling */
+.note-create-form {
+  display: flex;
+  gap: 1rem;
+  background: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+}
+
+.note-create-form input {
+  flex: 1;
+  background: #2c2c2c;
+  border: 1px solid #444;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
   color: white;
-  border-radius: 0.7rem;
-  padding: 1rem;
-  max-width: 20rem;
+  outline: none;
+  transition: border 0.3s;
 }
 
-.notes{
-  display:flex;
-  gap:1rem;
-  padding-block: 1rem;
-  padding-inline: 3rem;
-  flex-wrap: wrap;
+.note-create-form input:focus {
+  border-color: #bb86fc; /* Nice Purple highlight */
 }
 
-.note-create-form{
-  display:flex;
-  gap:1rem;
-  padding-block: 1rem;
-  padding-inline: 3rem;
+.note-create-form button {
+  background-color: #bb86fc;
+  color: #000;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.note-create-form button:hover {
+  background-color: #9965f4;
+  transform: translateY(-2px);
+}
+
+/* 4. Notes Grid Layout */
+.notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Better than flex for cards */
+  gap: 1.5rem;
+}
+
+/* 5. Individual Note Card */
+.note {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  padding: 1.5rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.note:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-color: #444;
+}
+
+.note h1 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #bb86fc;
+  word-wrap: break-word;
+}
+
+.note p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #b0b0b0;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+/* 6. Delete Button Styling */
+.note button {
+  align-self: flex-end;
+  background: transparent;
+  color: #cf6679; /* Reddish tone for delete */
+  border: 1px solid #cf6679;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+
+.note button:hover {
+  background: #cf6679;
+  color: white;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.app-header h1 span {
+  color: #bb86fc; /* Matching your purple theme */
+}
+
+.app-header p {
+  color: #888;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+/* Subtle separator line */
+.app-header::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #bb86fc;
+  margin: 1.5rem auto 0;
+  border-radius: 2px;
+}
+.notes-count {
+  margin-top: 1rem;
+  background: rgba(187, 134, 252, 0.1); /* Subtle purple background */
+  color: #b0b0b0;
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(187, 134, 252, 0.3);
+}
+
+.notes-count span {
+  color: #bb86fc; /* Bright purple for the number */
+  font-weight: bold;
 }

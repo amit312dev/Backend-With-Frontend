@@ -5,49 +5,65 @@ function App() {
   const [notes, setNotes] = useState([]);
 
   function fetchNotes() {
-    axios.get("/notes")
-    .then((response) => {
-    console.log(response.data.notes);
-    setNotes(response.data.notes);
-  });
-  };
+    axios.get("/notes").then((response) => {
+      console.log(response.data.notes);
+      setNotes(response.data.notes);
+    });
+  }
 
-useEffect(()=>{
-  fetchNotes();
-},[])
-
-function handleSubmit(e){
-  e.preventDefault();
-
-  const {title, description} = e.target.elements;
-  console.log(title.value, description.value);
-
-  axios.post("/notes", {
-    title: title.value,
-    description: description.value
-  }).then((response)=>{
-    console.log(response.data);
+  useEffect(() => {
     fetchNotes();
-  })
-}
+  }, []);
 
-function handleDeleteNote(noteId){
-console.log(noteId);
-axios.delete(`/notes/${noteId}`)
-.then(res=>{
-  console.log(res.data);
-  fetchNotes();
-})
+  function handleSubmit(e) {
+    e.preventDefault();
 
-}
+    const { title, description } = e.target.elements;
+    console.log(title.value, description.value);
+
+    axios
+      .post("/notes", {
+        title: title.value,
+        description: description.value,
+      })
+      .then((response) => {
+        console.log(response.data);
+         e.target.reset();
+        fetchNotes();
+      });
+  }
+
+  function handleDeleteNote(noteId) {
+    console.log(noteId);
+    axios.delete(`/notes/${noteId}`).then((res) => {
+      console.log(res.data);
+      fetchNotes();
+    });
+  }
   return (
     <>
+      <header className="app-header">
+        <h1>
+          Notes<span>Maker</span>
+        </h1>
+        <p>Organize your thoughts, one note at a time.</p>
+        <div className="notes-count">
+          {notes.length === 0 ? (
+            "No notes yet 📝"
+          ) : (
+            <>
+              You have <span>{notes.length}</span>{" "}
+              {notes.length === 1 ? "note" : "notes"}
+            </>
+          )}
+        </div>
+      </header>
 
-    <form className="note-create-form" onSubmit={handleSubmit}>
-      <input name="title" type="text" placeholder="Enter title" />
-      <input name="description" type="text" placeholder="Enter Description" />
-      <button>Create Note</button>
-    </form>
+      <form className="note-create-form" onSubmit={handleSubmit}>
+        <input name="title" type="text" placeholder="Enter title" />
+        <input name="description" type="text" placeholder="Enter Description" />
+        <button>Create Note</button>
+      </form>
 
       <div className="notes">
         {notes.map((note) => {
@@ -55,7 +71,13 @@ axios.delete(`/notes/${noteId}`)
             <div className="note" key={note._id || note.id}>
               <h1>{note.title}</h1>
               <p>{note.description}</p>
-              <button onClick={()=>{handleDeleteNote(note._id || note.id)}} >Delete</button>
+              <button
+                onClick={() => {
+                  handleDeleteNote(note._id || note.id);
+                }}
+              >
+                Delete
+              </button>
             </div>
           );
         })}
